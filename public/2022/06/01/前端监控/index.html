@@ -1,0 +1,840 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Stone Liu">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="什么是前端监控？它指的是通过一定的手段来获取用户行为以及跟踪产品在用户端的使用情况，并以监控数据为基础，为产品优化指明方向，为用户提供更加精确、完善的服务。 前端监控一般来讲一个成熟的产品，运营与产品团队需要关注用户在产品内的行为记录，通过用户的行为记录来优化产品，研发与测试团队则需要关注产品的性能以及异常，确保产品的性能体验以及安全迭代。 「所以前端监控一般也分为三大类：」 数据监控（监控用户行">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端监控">
+<meta property="og:url" content="http://www.stonelst.cn/2022/06/01/%E5%89%8D%E7%AB%AF%E7%9B%91%E6%8E%A7/index.html">
+<meta property="og:site_name" content="石头的技术分享">
+<meta property="og:description" content="什么是前端监控？它指的是通过一定的手段来获取用户行为以及跟踪产品在用户端的使用情况，并以监控数据为基础，为产品优化指明方向，为用户提供更加精确、完善的服务。 前端监控一般来讲一个成熟的产品，运营与产品团队需要关注用户在产品内的行为记录，通过用户的行为记录来优化产品，研发与测试团队则需要关注产品的性能以及异常，确保产品的性能体验以及安全迭代。 「所以前端监控一般也分为三大类：」 数据监控（监控用户行">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s1.ax1x.com/2022/04/24/L40t3R.png">
+<meta property="og:image" content="https://s1.ax1x.com/2022/04/24/L4dm5j.png">
+<meta property="og:image" content="https://s1.ax1x.com/2022/04/24/L4aqv6.png">
+<meta property="og:image" content="https://s1.ax1x.com/2022/04/24/L4weOK.png">
+<meta property="og:image" content="https://s1.ax1x.com/2022/04/24/L4wR7F.png">
+<meta property="article:published_time" content="2022-06-01T07:30:34.000Z">
+<meta property="article:modified_time" content="2022-11-20T05:15:37.978Z">
+<meta property="article:author" content="Stone Liu">
+<meta property="article:tag" content="js">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://s1.ax1x.com/2022/04/24/L40t3R.png">
+  
+  
+  
+  <title>前端监控 - 石头的技术分享</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.stonelst.cn","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/64527fcd4247f20fefef2677/1gvh46fq9';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
+<!--End of Tawk.to Script-->
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>石头的博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="前端监控"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-06-01 15:30" pubdate>
+          2022年6月1日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          5.2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          44 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">前端监控</h1>
+            
+            <div class="markdown-body">
+              
+              <h2 id="什么是前端监控？"><a href="#什么是前端监控？" class="headerlink" title="什么是前端监控？"></a>什么是前端监控？</h2><p>它指的是通过一定的手段来获取用户行为以及跟踪产品在用户端的使用情况，并以监控数据为基础，为产品优化指明方向，为用户提供更加精确、完善的服务。</p>
+<h2 id="前端监控"><a href="#前端监控" class="headerlink" title="前端监控"></a>前端监控</h2><p>一般来讲一个成熟的产品，运营与产品团队需要关注用户在产品内的行为记录，通过用户的行为记录来优化产品，研发与测试团队则需要关注产品的性能以及异常，确保产品的性能体验以及安全迭代。</p>
+<p><strong>「所以前端监控一般也分为三大类：」</strong></p>
+<h3 id="数据监控（监控用户行为）"><a href="#数据监控（监控用户行为）" class="headerlink" title="数据监控（监控用户行为）"></a>数据监控（监控用户行为）</h3><ul>
+<li>PV/UV: PV(page view)：即页面浏览量或点击量；UV（unique visitor）：指访问某个站点或点击某条新闻的不同 IP 地址的人数</li>
+<li>用户在每一个页面的停留时间</li>
+<li>用户通过什么入口来访问该网页</li>
+<li>用户在相应的页面中触发的行为，等…</li>
+</ul>
+<p>统计这些数据是有意义的，比如我们知道了用户来源的渠道，可以促进产品的推广，知道用户在每一个页面停留的时间，可以针对停留较长的页面，增加广告推送等等。</p>
+<h3 id="性能监控（监控页面性能）"><a href="#性能监控（监控页面性能）" class="headerlink" title="性能监控（监控页面性能）"></a>性能监控（监控页面性能）</h3><ul>
+<li>不同用户，不同机型和不同系统下的首屏加载时间</li>
+<li>白屏时间</li>
+<li>http 等请求的响应时间</li>
+<li>静态资源整体下载时间</li>
+<li>页面渲染时间</li>
+<li>页面交互动画完成时间，等…</li>
+</ul>
+<p>这些性能监控的结果，可以展示前端性能的好坏，根据性能监测的结果可以进一步的去优化前端性能，尽可能的提高用户体验。</p>
+<h3 id="异常监控（监控产品、系统异常）"><a href="#异常监控（监控产品、系统异常）" class="headerlink" title="异常监控（监控产品、系统异常）"></a>异常监控（监控产品、系统异常）</h3><p>及时的上报异常情况，可以避免线上故障的发上。虽然大部分异常可以通过 <code>try catch</code> 的方式捕获，但是比如内存泄漏以及其他偶现的异常难以捕获。常见的需要监控的异常包括：</p>
+<ul>
+<li>Javascript 的异常监控</li>
+<li>样式丢失的异常监控</li>
+</ul>
+<h2 id="数据采集"><a href="#数据采集" class="headerlink" title="数据采集"></a>数据采集</h2><p><img src="https://s1.ax1x.com/2022/04/24/L40t3R.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h3 id="Performance-—-前端性能监控"><a href="#Performance-—-前端性能监控" class="headerlink" title="Performance — 前端性能监控"></a>Performance — 前端性能监控</h3><p>一、什么是performance<br>performance可以获取到当前页面中与性能相关的信息，可以检测到白屏时间、首屏时间、用户可操作的时间节点、页面总下载的时间、DNS查询的时间、TCP链接的时间等。</p>
+<p>二、前端性能主要测试点<br>白屏时间：从打开网站到有内容渲染出来的时间点<br>首屏时间：首屏内容渲染完毕的时间节点<br>用户可操作时间节点：domready触发节点<br>总下载时间：window.onload的触发节点<br>新建个<a target="_blank" rel="noopener" href="https://doc.roadtel.top/download/attachments/1082328/demo.html?version=1&modificationDate=1650785189325&api=v2">demo.html</a></p>
+<p>其中 memory 是和内存相关的，navigation 是指来源相关的，timing是关键点时间。</p>
+<p>performance.memory 含义是显示此刻内存占用的情况</p>
+<p>jsHeapSizeLimit 表示内存大小的限制</p>
+<p>totalJSHeapSize 表示总内存的大小</p>
+<p>usedJSHeapSize 表示可使用的内存大小</p>
+<p>如果 usedJSHeadSize 大于 totalJSHeadSize 的话，那么会出现内存泄露的问题，因此不允许出现这种情况</p>
+<p>performance.navigation 含义是页面的来源信息</p>
+<p>redirectCount 如果有重定向，页面通过几次重定向跳转而来，默认为0</p>
+<p>type 表示页面打开方式，默认为0，可取值为0、1、2、255</p>
+<p>0 (TYPE_NAVIGATE) 表示正常进入该页面（非刷新、非重定向）</p>
+<p>1 (TYPE_RELOAD) 表示通过window.location.reload刷新的页面</p>
+<p>2 (TYPE_BACK_FORWARD) 表示通过浏览器的前进、后退按钮进入的页面</p>
+<p>255 (TYPE_RESERVED) 表示非以上方式进入页面</p>
+<p>performance.onresourcetimingbufferfull 一个回调函数，会在浏览器的资源时间性能缓冲区满了的时候执行</p>
+<p>performance.timeOrigin 是一系列时间点的基准点，精确到万分之一毫秒，动态的，刷新页面会改变</p>
+<p>performance.timing 是一系列关键时间点，包含网络、解析等一系列时间数据</p>
+<p>navigationStart 同一个浏览器上一个页面卸载结束时的时间戳。如果没有上一个页面，那么该值会和fetchStart的值相同</p>
+<p>redirectStart 第一个http重定向开始的时间戳，如果没有重定向，或重定向到同一个不同的源，那么返回0</p>
+<p>redirectEnd 最后一个http重定向完成时的时间戳。如果没有重定向，或重定向到一个不同的源，那么返回为0</p>
+<p>fetchStart 浏览器准备好使用http请求抓取文档的时间（发生在检查本地缓存之前）</p>
+<p>domainLookupStart DNS域名查询开始时间，如果使用了本地缓存或持久链接，该值则与fetchStart相同</p>
+<p>domainLookupEnd DNS域名查询结束时间，如果使用了本地缓存或持久链接，该值则与fetchStart相同</p>
+<p>connectStart http开始建立连接的时间，如果是持久链接的话，该值和fetchStart值相同，如果再在传输层发生了错误且需要重新建立链接的话，那么在这里显示的是新建立的链接开始时间</p>
+<p>secureConnectionStart https链接开始的时间，如果不是安全链接，则值为0</p>
+<p>connectEnd http完成建立链接的时间（完成握手），如果是持久链接的话，该值和fetchStart值相同，如果再在传输层发生了错误且需要重新建立链接的话，那么在这里显示的是新建立的链接开始时间</p>
+<p>requestStart http请求读取真实文档开始的时间，包括从本地读取缓存，链接错误重连时</p>
+<p>responseStart 开始接收到响应的时间（获取到第一个字节的时候），包括从本地读取缓存</p>
+<p>responseEnd http响应全部接收完成时的时间（获取到最后一个字节）包括从本地读取缓存</p>
+<p>unloadEventStart 前一个网页（和当前页面同域）unload的时间戳，如果没有前一个网页或前一个网页是不同的域的话，那么该值为0</p>
+<p>unloadEventEnd 与unloadEventStart对应，返回是前一个网页unload事件绑定的回调函数执行完毕时间戳</p>
+<p>domLoading 开始解析渲染DOM树的时间</p>
+<p>domInteractive 完成解析DOM树的时间（只是DOM树解析完成，但是并没有开始加载网页的资源）</p>
+<p>domContentLoadedEventStart DOM解析完成后，网页内资源加载开始的时间</p>
+<p>domContentLoadedEventEnd DOM解析完成后，网页内资源加载完成的时间</p>
+<p>domComplete DOM树解析完成，且资源也准备就绪的时间。Document.readyState变为complete，并将抛出readystatechange相关事件</p>
+<p>loadEventStart load事件发送给文档。也即load回调函数开始执行的时间，如果没有绑定load事件，则该值为0</p>
+<p>loadEventEnd load事件的回调函数执行完毕时间，如果没有绑定load事件，该值为0</p>
+<p>测试点代码</p>
+<p>重定向耗时 = redirectEnd - redirectStart<br>DNS查询耗时 = domainLookupEnd - domainLookupStart<br>TCP链接耗时 = connectEnd - connectStart<br>HTTP请求耗时 = responseEnd - responseStart<br>解析dom树耗时 = domComplete - domInteractive<br>白屏时间 = responseStart - navigationStart<br>DOMready时间 = domContentLoadedEventEnd - navigationStart<br>onload时间 = loadEventEnd - navigationStart</p>
+<h2 id="埋点上报"><a href="#埋点上报" class="headerlink" title="埋点上报"></a>埋点上报</h2><p><img src="https://s1.ax1x.com/2022/04/24/L4dm5j.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>OK，上面我们说到了前端监控的三个分类，了解了一个产品需要监控哪些内容以及为什么需要监控这些内容，那么我们应该怎么实现前端监控呢？</p>
+<p>实现前端监控，第一步肯定是将我们要监控的事项（数据）给收集起来，再提交给后台进行入库，最后再给数据分析组进行数据分析，最后处理好的数据再同步给运营或者是产品。数据收集的丰富性和准确性会直接影响到我们做前端监控的质量，因为我们会以此为基础，为产品的未来发展指引方向。</p>
+<p>现在常见的埋点上报方法有三种：<code>手动埋点</code>、<code>可视化埋点</code>、<code>无埋点</code></p>
+<h3 id="手动埋点"><a href="#手动埋点" class="headerlink" title="手动埋点"></a>手动埋点</h3><p>手动埋点，也叫代码埋点，即纯手动写代码，调用埋点 SDK 的函数，在需要埋点的业务逻辑功能位置调用接口，上报埋点数据，像**[友盟]<strong>、</strong>[百度统计]**等第三方数据统计服务商大都采用这种方案。手动埋点让使用者可以方便地设置自定义属性、自定义事件；所以当你需要深入下钻，并精细化自定义分析时，比较适合使用手动埋点。</p>
+<p>手动埋点的缺陷就是，项目工程量大，需要埋点的位置太多，而且需要产品开发运营之间相互反复沟通，容易出现手动差错，如果错误，重新埋点的成本也很高。</p>
+<h3 id="可视化埋点"><a href="#可视化埋点" class="headerlink" title="可视化埋点"></a>可视化埋点</h3><p>通过可视化交互的手段，代替上述的代码埋点。将业务代码和埋点代码分离，提供一个可视化交互的页面，输入为业务代码，通过这个可视化系统，可以在业务代码中自定义的增加埋点事件等等，最后输出的代码耦合了业务代码和埋点代码。</p>
+<p>可视化埋点的缺陷就是可以埋点的控件有限，不能手动定制。</p>
+<h3 id="无埋点"><a href="#无埋点" class="headerlink" title="无埋点"></a>无埋点</h3><p>无埋点则是前端自动采集全部事件，上报埋点数据，由后端来过滤和计算出有用的数据。优点是前端只要一次加载埋点脚本，缺点是流量和采集的数据过于庞大，服务器性能压力山大。</p>
+<p><img src="https://s1.ax1x.com/2022/04/24/L4aqv6.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h2 id="标准化埋点数据"><a href="#标准化埋点数据" class="headerlink" title="标准化埋点数据"></a>标准化埋点数据</h2><p><img src="https://s1.ax1x.com/2022/04/24/L4weOK.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h2 id="日志存储"><a href="#日志存储" class="headerlink" title="日志存储"></a>日志存储</h2><p>1.上传到服务器</p>
+<ul>
+<li>日志量过大，可能导致传输、存储、查询速度等问题</li>
+<li>过于频繁上报、会增加服务器压力</li>
+<li>网络传输，容易导致日志丢失等问题</li>
+<li>消耗前端资源，影响主业务</li>
+</ul>
+<p>2.本地存储</p>
+<ul>
+<li>需要引导用户手动提交日志</li>
+<li>通过后台下发命令拉取日志</li>
+</ul>
+<h2 id="为什么都用GIF来做埋点？"><a href="#为什么都用GIF来做埋点？" class="headerlink" title="为什么都用GIF来做埋点？"></a>为什么都用GIF来做埋点？</h2><h3 id="发现过程"><a href="#发现过程" class="headerlink" title="发现过程"></a>发现过程</h3><p>首先说一下我是怎么发现的，前一段时间，产品提了个需求，说我们现在的书籍曝光上报规范并不是他们想要的数据，并且以后所有页面的书籍上报都统一成最新规范。</p>
+<p>曝光规范：</p>
+<ul>
+<li>书籍出现在可视区并停留1秒，算作有效曝光</li>
+<li>书籍不能重复曝光，假如它一直在可视区滚动时只能上报一次</li>
+<li>当它移出可视区后再回到可视区，再按第一点进行曝光</li>
+</ul>
+<p>OK，既然要所有页面统一，那就只能封装成通用库来使用了，这里实现逻辑就不贴了，想看的私聊我发你，主要的难点就是停留时长计算，以及曝光标记。</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs awk">const exposeReportClass = new exposeReport(&#123;<br>      scrollDom: <span class="hljs-string">&quot;&quot;</span>,  <span class="hljs-regexp">//</span> 滚动容器，建议指定一个滚动容器，不传默认为window<br>      watchDom: <span class="hljs-string">&quot;.bookitem&quot;</span>, <span class="hljs-regexp">//</span> 监听的dom,建议使用class类，标签也支持<br>      time: <span class="hljs-number">1000</span>             <span class="hljs-regexp">//</span> 停留有效时长ms<br>&#125;);<br><span class="hljs-regexp">//</span> 提供两个上报方法<br>exposeReportClass.didReport(()=&gt;&#123;<br>  <span class="hljs-regexp">//</span> 手动上报<br>  <span class="hljs-regexp">//</span>callback<br>&#125;)<br>exposeReportClass.scrollReport(()=&gt;&#123;<br>  <span class="hljs-regexp">//</span> 滚动上报<br>  <span class="hljs-regexp">//</span>callback<br>&#125;)<br><span class="hljs-regexp">//</span> <br></code></pre></td></tr></table></figure>
+
+<p>具体业务逻辑之需要放在对应的callback里面，而上报逻辑开发者无需考虑，因为我底层已经统一处理好了。</p>
+<p>然后我再测试的时候就发现，上报发的请求居然是通过图片发起的，并不是我们认为的接口上报。</p>
+<p><img src="https://s1.ax1x.com/2022/04/24/L4wR7F.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>然后我去查了下资料，发现很多大厂的上报都是这么干的！</p>
+<h3 id="使用GIF上报的原因"><a href="#使用GIF上报的原因" class="headerlink" title="使用GIF上报的原因"></a>使用GIF上报的原因</h3><p>向服务器端上报数据，可以通过请求接口，请求普通文件，或者请求图片资源的方式进行。<strong>只要能上报数据，无论是请求GIF文件还是请求其他普通文件(JS)或者是请求接口，服务器端其实并不关心具体的上报方式。</strong>那为什么所有系统都统一使用了请求GIF图片的方式上报数据呢？</p>
+<p><strong>「防止跨域」</strong></p>
+<p>一般而言，打点域名都不是当前域名，所以所有的接口请求都会构成跨域。而跨域请求很容易出现由于配置不当被浏览器拦截并报错，这是不能接受的。但图片的src属性并不会跨域，并且同样可以发起请求。（排除接口上报）</p>
+<p><strong>「防止阻塞页面加载，影响用户体验」</strong></p>
+<p>通常，创建资源节点后只有将对象注入到浏览器DOM树后，浏览器才会实际发送资源请求。反复操作DOM不仅会引发性能问题，而且载入js/css资源还会阻塞页面渲染，影响用户体验。</p>
+<p>但是图片请求例外。构造图片打点不仅不用插入DOM，只要在js中new出Image对象就能发起请求，而且还没有阻塞问题，在没有js的浏览器环境中也能通过img标签正常打点，这是其他类型的资源请求所做不到的。（排除文件方式）</p>
+<p><strong>「相比PNG/JPG，GIF的体积最小」</strong></p>
+<p>最小的BMP文件需要74个字节，PNG需要67个字节，而合法的GIF，只需要43个字节。</p>
+<p>同样的响应，GIF可以比BMP节约41%的流量，比PNG节约35%的流量。</p>
+<p>1兆字节(mb)=1048576字节(b)</p>
+<p>1048576/43 ≈ 24385</p>
+<p><strong>「并且大多采用的是1*1像素的透明GIF来上报」</strong></p>
+<p>1x1像素是最小的合法图片。而且，因为是通过图片打点，所以图片最好是透明的，这样一来不会影响页面本身展示效果，二者表示图片透明只要使用一个二进制位标记图片是透明色即可，不用存储色彩空间数据，可以节约体积。</p>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%89%8D%E7%AB%AF%E7%9B%91%E6%8E%A7/" class="category-chain-item">前端监控</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/js/">#js</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>前端监控</div>
+      <div>http://www.stonelst.cn/2022/06/01/前端监控/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Stone Liu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年6月1日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/01/28/%E6%90%AD%E5%BB%BAsamba%E6%9C%8D%E5%8A%A1%E5%AE%9E%E7%8E%B0%E6%96%87%E4%BB%B6%E5%85%B1%E4%BA%AB/" title="搭建samba服务实现文件共享">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">搭建samba服务实现文件共享</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/12/04/ffmpeg%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" title="ffmpeg常用命令">
+                        <span class="hidden-mobile">ffmpeg常用命令</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+  <div id="twikoo"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#comments', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/twikoo/1.4.17/twikoo.all.min.js', function() {
+        var options = Object.assign(
+          {"envId":"https://s5.nsloop.com:10967","region":"ap-shanghai","path":"window.location.pathname"},
+          {
+            el: '#twikoo',
+            path: 'window.location.pathname',
+            onCommentLoaded: function() {
+              var imgSelector = '#twikoo .tk-content img:not(.tk-owo-emotion)';
+              Fluid.plugins.imageCaption(imgSelector);
+              Fluid.plugins.fancyBox(imgSelector);
+            }
+          }
+        )
+        twikoo.init(options)
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://stonelst.gitee.io/about/" target="_blank" rel="nofollow noopener"><span>Stone</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.0/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

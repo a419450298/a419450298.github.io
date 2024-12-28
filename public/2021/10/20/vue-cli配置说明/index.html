@@ -1,0 +1,772 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Stone Liu">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="vue-cli中配置多个代理如果要研究vue-cli工具，一定要仔细阅读官方文档 vue-cli官方配置文档 vue-cli脚手架 一、cli2 和cli3的区别在介绍配置之前有必要先介绍一下，cli2和cli3的区别 目录的区别vue-cli 3.0的项目摈弃了 config 、 build 、 static 目录，新增了 public 目录，将根目录下的 index.html 放置在 publ">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue-cli配置说明">
+<meta property="og:url" content="http://www.stonelst.cn/2021/10/20/vue-cli%E9%85%8D%E7%BD%AE%E8%AF%B4%E6%98%8E/index.html">
+<meta property="og:site_name" content="石头的技术分享">
+<meta property="og:description" content="vue-cli中配置多个代理如果要研究vue-cli工具，一定要仔细阅读官方文档 vue-cli官方配置文档 vue-cli脚手架 一、cli2 和cli3的区别在介绍配置之前有必要先介绍一下，cli2和cli3的区别 目录的区别vue-cli 3.0的项目摈弃了 config 、 build 、 static 目录，新增了 public 目录，将根目录下的 index.html 放置在 publ">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://z3.ax1x.com/2021/10/20/5BP1Re.png">
+<meta property="og:image" content="https://z3.ax1x.com/2021/10/20/5BApy4.png">
+<meta property="article:published_time" content="2021-10-20T02:21:32.000Z">
+<meta property="article:modified_time" content="2022-11-20T05:15:37.977Z">
+<meta property="article:author" content="Stone Liu">
+<meta property="article:tag" content="vue2">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://z3.ax1x.com/2021/10/20/5BP1Re.png">
+  
+  
+  
+  <title>vue-cli配置说明 - 石头的技术分享</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.stonelst.cn","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/64527fcd4247f20fefef2677/1gvh46fq9';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
+<!--End of Tawk.to Script-->
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>石头的博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="vue-cli配置说明"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2021-10-20 10:21" pubdate>
+          2021年10月20日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          6.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          51 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">vue-cli配置说明</h1>
+            
+            <div class="markdown-body">
+              
+              <h3 id="vue-cli中配置多个代理"><a href="#vue-cli中配置多个代理" class="headerlink" title="vue-cli中配置多个代理"></a>vue-cli中配置多个代理</h3><p>如果要研究vue-cli工具，一定要仔细阅读官方文档</p>
+<p><a target="_blank" rel="noopener" href="http://vuejs-templates.github.io/webpack/commands.html">vue-cli官方配置文档</a></p>
+<p><a target="_blank" rel="noopener" href="https://cli.vuejs.org/zh/guide/">vue-cli脚手架</a></p>
+<h3 id="一、cli2-和cli3的区别"><a href="#一、cli2-和cli3的区别" class="headerlink" title="一、cli2 和cli3的区别"></a>一、cli2 和cli3的区别</h3><p>在介绍配置之前有必要先介绍一下，cli2和cli3的区别</p>
+<h4 id="目录的区别"><a href="#目录的区别" class="headerlink" title="目录的区别"></a>目录的区别</h4><h4 id=""><a href="#" class="headerlink" title=""></a><img src="https://z3.ax1x.com/2021/10/20/5BP1Re.png" srcset="/img/loading.gif" lazyload></h4><p>vue-cli 3.0的项目摈弃了 <strong>config 、 build 、 static</strong> 目录，新增了 <strong>public</strong> 目录，将根目录下的 index.html 放置在 public 目录下。</p>
+<p>新增 <strong>webpack</strong> 的配置文件 <strong>vue.config.js</strong> ，可以在该文件中进行webpack的相关配置，例如 <strong>loader、开发环境</strong>等等。</p>
+<p>新增 .<strong>browserslistrc</strong> 文件，指定了项目的目标浏览器的范围，用来确定需要转译的 JavaScript 特性和需要添加的 CSS 浏览器前缀，可以理解为浏览器兼容。</p>
+<p>新增 <strong>babel.config.js</strong> 替代原先的**.babelrc**，具备和原先.babelrc一样的作用。</p>
+<p>src文件夹中多了 views 文件夹，相比2.0，在 index.js 变为了 router.js</p>
+<p>2.0版本相比3.0版本 有build和config文件夹等，src文件夹中有router文件夹，里面有index.js</p>
+<h4 id="启动项目"><a href="#启动项目" class="headerlink" title="启动项目"></a>启动项目</h4><p>3.x启动项目：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs undefined">npm run serve<br></code></pre></td></tr></table></figure>
+
+<p>2.x启动项目：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs undefined">npm run dev  或   npm run start<br></code></pre></td></tr></table></figure>
+
+<h4 id="配置项"><a href="#配置项" class="headerlink" title="配置项"></a>配置项</h4><p><img src="https://z3.ax1x.com/2021/10/20/5BApy4.png" srcset="/img/loading.gif" lazyload></p>
+<p>vue-cli2.0的域名配置，分为开发环境和生产环境，所以配置域名时，需要在<strong>config中的dev.env.js和prod.env.js中分别配置</strong></p>
+<p>前面说过，到了3.0 config文件已经被移除，但是多了.env.production和env.development文件，除了文件位置，实际配置起来和2.0没什么不同</p>
+<p>当然，没了config文件，<strong>跨域需要配置域名时，从config/index.js 挪到了vue.config.js中，配置方法不变</strong></p>
+<h3 id="二、vue-config-js配置"><a href="#二、vue-config-js配置" class="headerlink" title="二、vue.config.js配置"></a>二、vue.config.js配置</h3><p>vue-cli 3.x 脚手架搭建完成后，项目目录中没有 vue.config.js 文件，<strong>需要手动在根目录中创建 vue.config.js</strong>。vue.config.js 是一个可选的配置文件，如果项目的 (和 package.json 同级的) 根目录中存在这个文件，那么它会被 @vue/cli-service 自动加载。你也可以使用 package.json 中的 vue 字段，但是注意这种写法需要你严格遵照 JSON 的格式来写。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs bash">module.exports = &#123;<br>    // 部署生产环境和开发环境下的URL：可对当前环境进行区分，baseUrl 从 Vue CLI 3.3 起已弃用，要使用publicPath<br>    // baseUrl: process.env.NODE_ENV === <span class="hljs-string">&#x27;production&#x27;</span> ? <span class="hljs-string">&#x27;./&#x27;</span> : <span class="hljs-string">&#x27;/&#x27;</span> <br>    publicPath: process.env.NODE_ENV === <span class="hljs-string">&#x27;production&#x27;</span> ? <span class="hljs-string">&#x27;/public/&#x27;</span> : <span class="hljs-string">&#x27;./&#x27;</span>,<br>    // 输出文件目录：在npm run build时，生成文件的目录名称 <br>    outputDir: <span class="hljs-string">&#x27;dist&#x27;</span>,<br>    // 放置生成的静态资源 (js、css、img、fonts) 的 (相对于 outputDir 的) 目录 <br>    assetsDir: <span class="hljs-string">&quot;assets&quot;</span>,<br>    // 是否在构建生产包时生成 sourceMap 文件，<span class="hljs-literal">false</span>将提高构建速度 <br>    productionSourceMap: <span class="hljs-literal">false</span>,<br>    // 默认情况下，生成的静态资源在它们的文件名中包含了 <span class="hljs-built_in">hash</span> 以便更好的控制缓存，你可以通过将这个选项设为 <span class="hljs-literal">false</span> 来关闭文件名哈希。(<span class="hljs-literal">false</span>的时候就是让原来的文件名不改变)<br>    filenameHashing: <span class="hljs-literal">false</span>,<br>    // 代码保存时进行eslint检测<br>    lintOnSave: <span class="hljs-literal">false</span>,<br>    // webpack-dev-server 相关配置<br>    devServer: &#123;<br>        // 自动打开浏览器<br>        open: <span class="hljs-literal">true</span>,<br>        host: <span class="hljs-string">&#x27;localhost&#x27;</span>,<br>        // 端口<br>        port: 9930,<br>        // https<br>        https: <span class="hljs-literal">false</span>,<br>        // 热更新<br>        hotOnly: <span class="hljs-literal">false</span>,<br>        // 使用代理<br>        proxy: &#123;<br>            <span class="hljs-string">&#x27;/api&#x27;</span>: &#123;<br>                // 目标代理服务器地址<br>                target: <span class="hljs-string">&#x27;http://47.100.47.3/&#x27;</span>,<br>                // 开启代理，本地创建一个虚拟服务器 允许跨域<br>                changeOrigin: <span class="hljs-literal">true</span>, <br>            &#125;,<br>        &#125;,<br>    &#125;,<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="三、cli2设置多个反向代理"><a href="#三、cli2设置多个反向代理" class="headerlink" title="三、cli2设置多个反向代理"></a>三、cli2设置多个反向代理</h3><p>设置</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs bash">proxyTable: &#123;<br>  sencod: &#123;<br>    target: <span class="hljs-string">&#x27;https://cnodejs.org/&#x27;</span>,     //这里只是例子<br>        filter(pathname, req) &#123;<br>          // console.info(<span class="hljs-string">&#x27;pathname&#x27;</span>,pathname)<br>          const isApi = pathname.indexOf(<span class="hljs-string">&#x27;/api&#x27;</span>) == 0;   //这里的abc是和后台商量好=&gt;api<br>          const ret = isApi;<br>          <span class="hljs-built_in">return</span> ret;<br>        &#125;,<br>        changeOrigin: <span class="hljs-literal">true</span>,<br>    &#125;,<br>  three: &#123;<br>    target: <span class="hljs-string">&#x27; https://easy-mock.com/mock/59d78f3b9d/&#x27;</span>, //另外的一个接口例如mock的<br>        filter(pathname, req) &#123;<br>          // console.info(<span class="hljs-string">&#x27;pathname&#x27;</span>,pathname)<br>          const isApi = pathname.indexOf(<span class="hljs-string">&#x27;/baseapi&#x27;</span>) == 0;   //这里的abc是和后台商量好=&gt;baseapi<br>          const ret = isApi;<br>          <span class="hljs-built_in">return</span> ret;<br>        &#125;,<br>        changeOrigin: <span class="hljs-literal">true</span>,<br>      &#125;,<br>    &#125;,<br></code></pre></td></tr></table></figure>
+
+<p>调用</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs bash">methods: &#123;<br>      <span class="hljs-function"><span class="hljs-title">getData</span></span>() &#123;<br>        axios.get(<span class="hljs-string">&#x27;/api/v1/topics&#x27;</span>, &#123; //cnodejs的接口<br>          params: &#123;<br>            page: 20,<br>            <span class="hljs-built_in">limit</span>: 10<br>          &#125;<br>        &#125;)<br>          .<span class="hljs-keyword">then</span>(<span class="hljs-keyword">function</span> (response) &#123;<br>            //console.log(response);<br>          &#125;)<br>          .catch(<span class="hljs-keyword">function</span> (error) &#123;<br>            //console.log(error);<br>          &#125;);<br>      &#125;,<br>      <span class="hljs-function"><span class="hljs-title">getDatathree</span></span>() &#123;<br>        axios.get(<span class="hljs-string">&#x27;/baseapi/table&#x27;</span>) //easy-mock的模拟出来的接口<br>          .<span class="hljs-keyword">then</span>(<span class="hljs-keyword">function</span> (response) &#123;<br>            console.log(response);<br>          &#125;)<br>          .catch(<span class="hljs-keyword">function</span> (error) &#123;<br>            console.log(error);<br>          &#125;);<br>      &#125;<br>    &#125;,<br></code></pre></td></tr></table></figure>
+
+<h3 id="四、cli3设置多个反向代理"><a href="#四、cli3设置多个反向代理" class="headerlink" title="四、cli3设置多个反向代理"></a>四、cli3设置多个反向代理</h3><p>设置</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><code class="hljs bash">module.exports = &#123;<br>    publicPath: <span class="hljs-string">&#x27;/&#x27;</span>,<br>    outputDir: <span class="hljs-string">&#x27;dist&#x27;</span>,<br>    assetsDir: <span class="hljs-string">&#x27;static&#x27;</span>,<br>    filenameHashing: <span class="hljs-literal">true</span>,<br>    devServer: &#123;<br>      open: <span class="hljs-literal">true</span>,  // 自动打开浏览器<br>      host: <span class="hljs-string">&#x27;127.0.0.1&#x27;</span>,<br>      port: 8081,<br>      https: <span class="hljs-literal">false</span>,<br>      hotOnly: <span class="hljs-literal">false</span>,<br>      disableHostCheck: <span class="hljs-literal">true</span>,<br>      proxy: &#123;<br>          <span class="hljs-string">&quot;/api&quot;</span>: &#123;<br>              target: <span class="hljs-string">&#x27;http://xxxxxxx&#x27;</span>, // 这个地址结尾我原本加了一个‘/’,然后一直报404，去掉就好了<br>              changeOrigin: <span class="hljs-literal">true</span>,<br>              pathRewrite: &#123;<br>                  <span class="hljs-string">&#x27;^/api&#x27;</span>: <span class="hljs-string">&#x27;/&#x27;</span><br>              &#125;<br>          &#125;,<br>          <span class="hljs-string">&#x27;/bpi&#x27;</span>: &#123;<br>              target: <span class="hljs-string">&quot;http://xxxxxx&quot;</span>, // 目标地址<br>              ws: <span class="hljs-literal">true</span>,  // 是否启用websockets<br>              changeOrigin: <span class="hljs-literal">true</span>, //开启代理：在本地会创建一个虚拟服务端，然后发送请求的数据，并同时接收请求的数据，这样服务端和服务端进行数据的交互就不会有跨域问题<br>              pathRewrite: &#123;<br>                <span class="hljs-string">&#x27;^/bpi&#x27;</span>: <span class="hljs-string">&#x27;/&#x27;</span>  //这里重写路径<br>            &#125;<br>          &#125;,<br>          <span class="hljs-string">&#x27;/cpi&#x27;</span>: &#123;<br>              target: <span class="hljs-string">&#x27;http://&#x27;</span>,<br>              changeOrigin: <span class="hljs-literal">true</span>,<br>              pathRewrite: &#123;<br>                <span class="hljs-string">&#x27;^/cpi&#x27;</span>: <span class="hljs-string">&#x27;/&#x27;</span><br>            &#125;<br>          &#125;<br>      &#125;,<br>  <br>      before: app =&gt; &#123;<br>      &#125;<br>    &#125;,<br>    // 构建时开启多进程处理 babel 编译<br>    parallel: require(<span class="hljs-string">&#x27;os&#x27;</span>).cpus().length &gt; 1,<br>  <br>    // https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-pwa<br>    pwa: &#123;&#125;,<br>  <br>    // 第三方插件配置<br>    pluginOptions: &#123;&#125;<br>  &#125;;<br></code></pre></td></tr></table></figure>
+
+<p>调用</p>
+<ol>
+<li>在main.js里面，设置baseURL，Vue.prototype.$http=axios; 这里根据实际需要设置请求头之类的</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash">this.<span class="hljs-variable">$http</span>(&#123;<br>    method: <span class="hljs-string">&#x27;post&#x27;</span>,<br>    url: <span class="hljs-string">&#x27;/api/xxx/xxx&#x27;</span>,<br>    data: params<br>&#125;).<span class="hljs-keyword">then</span>(res =&gt; &#123;<br>    console.log(res.data)<br>&#125;).catch(error =&gt; &#123;<br>    console.log(error)<br>&#125;)<br></code></pre></td></tr></table></figure>
+
+<h3 id="五、一句话总结"><a href="#五、一句话总结" class="headerlink" title="五、一句话总结"></a>五、一句话总结</h3><p>配置多个反向代理需要前端或后端约定,url中判断出区别从而代理到不同的接口</p>
+<h3 id="六、其他"><a href="#六、其他" class="headerlink" title="六、其他"></a>六、其他</h3><h4 id="一、产生原因"><a href="#一、产生原因" class="headerlink" title="一、产生原因"></a>一、产生原因</h4><ul>
+<li>跨域是a页面想要获取b页面资源，如果a,b页面的协议、域名、端口号、子域名不同，所进行的访问都是跨域的，而浏览器一般为了安全都限制了跨域访问，也就是不允许跨域访问资源。</li>
+</ul>
+<h4 id="二、解决办法"><a href="#二、解决办法" class="headerlink" title="二、解决办法"></a>二、解决办法</h4><h5 id="1-JSONP"><a href="#1-JSONP" class="headerlink" title="1.JSONP"></a>1.JSONP</h5><ul>
+<li>JSONP是一个非官方协议，它允许在服务器端集成script tags返回至客户端，通过javascript callback的形式实现跨域访问。</li>
+<li>基本思想：网页通过添加一个<code>&lt;script&gt;</code>元素，向服务器请求JSON数据，这种做法不受同源策略限制；服务器收到请求后，将数据放在一个指定名字的回调函数里传回来。</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text/javascript&quot;</span>&gt;</span><span class="javascript"></span><br><span class="javascript">    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">jsonpCallback</span>(<span class="hljs-params">result</span>)</span>&#123;</span><br><span class="javascript">        <span class="hljs-comment">//alert(result);</span></span><br><span class="javascript">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> i <span class="hljs-keyword">in</span> result)&#123;</span><br><span class="javascript">            alert(i + <span class="hljs-string">&quot;:&quot;</span> + result[i]);     <span class="hljs-comment">//循环输出</span></span><br><span class="javascript">        &#125;</span><br><span class="javascript">    &#125;</span><br><span class="javascript">    <span class="hljs-keyword">var</span> JSONP = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">&quot;script&quot;</span>);</span><br><span class="javascript">    JSONP.type = <span class="hljs-string">&quot;text/javascript&quot;</span>;</span><br><span class="javascript">    JSONP.src = <span class="hljs-string">&quot;http://crossdomain.com/services.php?callback=jsonpCallback&quot;</span>;</span><br><span class="javascript">    <span class="hljs-built_in">document</span>.getElementsByTagName(<span class="hljs-string">&quot;head&quot;</span>)[<span class="hljs-number">0</span>].appendChild(JSONP);</span><br><span class="javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h5 id="2-window-name"><a href="#2-window-name" class="headerlink" title="2.window.name"></a>2.window.name</h5><ul>
+<li>window.name+iframe需要目标服务器响应window.name，window对象有一个name属性，该属性有个特征：即在一个窗口（window）的生命周期内，窗口载入的所有的页面都是共享一个window.name的，每个页面对window. name都有读写的权利，window.name 是持久存在一个窗口载入过的所有页面中的！</li>
+</ul>
+<h5 id="3-window-postMessage"><a href="#3-window-postMessage" class="headerlink" title="3.window.postMessage"></a>3.window.postMessage</h5><ul>
+<li>HTML5引入了一个全新的API：跨文档消息传输Cross Document Messaging 。它的目标是在一个单独的持久连接上提供全双工、双向通信。（同源策略对web sockets不适用）</li>
+<li>web sockets原理：在JS创建了web sockets之后，会有一个HTTP请求发送到浏览器以发起连接。取得服务器响应后，建立的连接会使用HTTP升级从HTTP协议交换为web sockets协议。</li>
+<li><code>otherWindow.postMessage(message, targetOrigin)</code><br> otherWindow：指目标窗口，也就是给哪个窗口发消息，是window.frames属性的成员或者由window.open方法创建的窗口。<br> 参数说明：<br> (1)message：是要发送的消息，类型为string，object<br> (2)targetOrigin：是限定消息接收范围，不限制使用“ * ”</li>
+</ul>
+<h5 id="4-CORS"><a href="#4-CORS" class="headerlink" title="4.CORS"></a>4.CORS</h5><ul>
+<li>基本思想：使用自定义的HTTP头部让浏览器与服务器进行沟通，从而决定请求或响应是应该成功，还是应该失败。</li>
+</ul>
+<h5 id="5-web-sockets"><a href="#5-web-sockets" class="headerlink" title="5.web sockets"></a>5.web sockets</h5><ul>
+<li>web sockets是浏览器的一种API，它的目标是在一个单独的持久连接上提供全双工、双向通信。(同源策略对web sockets不适用)</li>
+<li>web sockets原理：在JS创建了web socket之后，会有一个HTTP请求发送到浏览器以发起连接。取得服务器响应后，建立的连接会使用HTTP升级从HTTP协议交换为web sockt协议。</li>
+</ul>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E7%9F%A5%E8%AF%86%E5%A4%8D%E4%B9%A0/" class="category-chain-item">知识复习</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/vue2/">#vue2</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>vue-cli配置说明</div>
+      <div>http://www.stonelst.cn/2021/10/20/vue-cli配置说明/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Stone Liu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2021年10月20日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/10/28/%E8%B6%8A%E6%9D%A5%E8%B6%8A%E5%8D%B7%E4%B9%8Bjava%E5%AD%A6%E4%B9%A0/" title="越来越卷之java学习">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">越来越卷之java学习</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/10/18/vue2%E4%B8%AD%E5%B8%B8%E7%94%A8%E5%B1%9E%E6%80%A7/" title="vue2中常用属性">
+                        <span class="hidden-mobile">vue2中常用属性</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+  <div id="SOHUCS" sid='http://www.stonelst.cn/2021/10/20/vue-cli%E9%85%8D%E7%BD%AE%E8%AF%B4%E6%98%8E/'></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#SOHUCS', function() {
+      Fluid.utils.createScript("https://changyan.sohu.com/upload/changyan.js", function() {
+        window.changyan.api.config({"appid":"cywuoKn3d","appkey":"eb7dc3d266c55ba286e496c937cd845a"})
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://stonelst.gitee.io/about/" target="_blank" rel="nofollow noopener"><span>Stone</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.0/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

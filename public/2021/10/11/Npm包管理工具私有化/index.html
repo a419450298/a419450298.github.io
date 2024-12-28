@@ -1,0 +1,745 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Stone Liu">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="一、前言在工作中，我们常常会开发很多通用性的代码，比如UI库，工具类，公用业务逻辑代码等。随着前端队伍越来越壮大，为了快速的进行模块化开发提高复用性，项目间共享代码就变得尤为必要。常用的框架&#x2F;类库没必要在每个项目都放一份，团队内部产出的公共模块也需要有合理的共享机制。现在，用npm管理前端代码已经是业界趋势。通常我们可能会将代码发布到npm，需要的项目npm&#x2F;yarn安装引入，但是npm无法保证">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Npm包管理工具私有化">
+<meta property="og:url" content="http://www.stonelst.cn/2021/10/11/Npm%E5%8C%85%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7%E7%A7%81%E6%9C%89%E5%8C%96/index.html">
+<meta property="og:site_name" content="石头的技术分享">
+<meta property="og:description" content="一、前言在工作中，我们常常会开发很多通用性的代码，比如UI库，工具类，公用业务逻辑代码等。随着前端队伍越来越壮大，为了快速的进行模块化开发提高复用性，项目间共享代码就变得尤为必要。常用的框架&#x2F;类库没必要在每个项目都放一份，团队内部产出的公共模块也需要有合理的共享机制。现在，用npm管理前端代码已经是业界趋势。通常我们可能会将代码发布到npm，需要的项目npm&#x2F;yarn安装引入，但是npm无法保证">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://z3.ax1x.com/2021/10/11/5VST3D.png">
+<meta property="article:published_time" content="2021-10-10T17:18:58.000Z">
+<meta property="article:modified_time" content="2022-11-20T05:15:37.977Z">
+<meta property="article:author" content="Stone Liu">
+<meta property="article:tag" content="工具">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://z3.ax1x.com/2021/10/11/5VST3D.png">
+  
+  
+  
+  <title>Npm包管理工具私有化 - 石头的技术分享</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.stonelst.cn","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/64527fcd4247f20fefef2677/1gvh46fq9';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
+<!--End of Tawk.to Script-->
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>石头的博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Npm包管理工具私有化"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2021-10-11 01:18" pubdate>
+          2021年10月11日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          18 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Npm包管理工具私有化</h1>
+            
+            <div class="markdown-body">
+              
+              <p><a target="_blank" rel="noopener" href="https://imgtu.com/i/5VST3D"><img src="https://z3.ax1x.com/2021/10/11/5VST3D.png" srcset="/img/loading.gif" lazyload alt="5VST3D.png"></a></p>
+<h2 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h2><p>在工作中，我们常常会开发很多通用性的代码，比如UI库，工具类，公用业务逻辑代码等。随着前端队伍越来越壮大，为了快速的进行模块化开发提高复用性，项目间共享代码就变得尤为必要。常用的框架/类库没必要在每个项目都放一份，团队内部产出的公共模块也需要有合理的共享机制。现在，用npm管理前端代码已经是业界趋势。通常我们可能会将代码发布到npm，需要的项目npm/yarn安装引入，但是npm无法保证源码的私密性，这时我们就需要使用到私有的npm仓库。 </p>
+<h2 id="二、私有npm仓库优势"><a href="#二、私有npm仓库优势" class="headerlink" title="二、私有npm仓库优势"></a>二、私有npm仓库优势</h2><ul>
+<li>只能在公司的局域网(内网)使用，保证了代码的私密性</li>
+<li>因为使用局域网，依赖包下载更快</li>
+<li>可以将发布和安装npm的包进行权限设置，利于npm仓库的维护</li>
+<li>修改了第三方npm包，但是发布包的作者未将PR合并到master，导致该功能无法在安装包后引用，这时我们可以将第三方包源码修改，发布于私有仓库，即可下载安装，而不用在node_modules中更改源码</li>
+<li>微前端框架（qiankun，single-spa）可以弥补js沙盒隔离的问题，更便于公司产品化</li>
+<li>利于公司前端的技术沉淀</li>
+</ul>
+<h2 id="三、工具选择"><a href="#三、工具选择" class="headerlink" title="三、工具选择"></a>三、工具选择</h2><p>CNPM 私服：需要占用服务器资源，有些公司可能还需要 DevOps 同事的支持</p>
+<p>Nexus 私服：<a target="_blank" rel="noopener" href="https://link.jianshu.com/?t=https://www.sonatype.com/nexus-repository-oss">Nexus</a> 对 Maven 包管理的私服工具，其实他还支持 npm 、docker 、yum 等等。</p>
+<p>Sinopia：[sɪ’nəʊpɪə]]：已经停止维护</p>
+<p>Verdaccio (威尔达乔): Sinopia停更后社区在维护</p>
+<h2 id="四、服务端搭建"><a href="#四、服务端搭建" class="headerlink" title="四、服务端搭建"></a>四、服务端搭建</h2><p>Verdaccio 是一个 <strong>Node.js</strong>创建的<strong>轻量的私有npm proxy registry</strong> （推荐使用）</p>
+<p>基于 windows10 进行搭建</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">//</span> 安装 verdaccio<br>npm install -g verdaccio<br><br><span class="hljs-regexp">//</span> 加上–unsafe-perm的原因是防止报 grywarn 权限的错<br>npm install -g verdaccio --unsafe-perm<br><br><span class="hljs-regexp">//</span> 启动<br>verdaccio<br><br></code></pre></td></tr></table></figure>
+
+<h2 id="五、客户端使用"><a href="#五、客户端使用" class="headerlink" title="五、客户端使用"></a>五、客户端使用</h2><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">//</span> 更换 npm 库<br>npm set registry http:<span class="hljs-regexp">//</span>localhost:<span class="hljs-number">4873</span>/<br><br></code></pre></td></tr></table></figure>
+
+<p>tips：</p>
+<p>① 推荐使用 npr 对 npm registry 进行统一管理，具体使用如下</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">//</span> 安装 nrm<br>npm install -g nrm<br><br><span class="hljs-regexp">//</span> 添加地址到 nrm 中<br>nrm add [registry name] [registry address] <br>nrm add verdaccio http:<span class="hljs-regexp">//</span>localhost:<span class="hljs-number">4873</span>/<br><br><span class="hljs-regexp">//</span> 查看 nrm 镜像源地址<br>nrm ls<br><br>* npm ---- https:<span class="hljs-regexp">//</span>registry.npmjs.org/<br>  cnpm --- http:<span class="hljs-regexp">//</span>r.cnpmjs.org/<br>  taobao - https:<span class="hljs-regexp">//</span>registry.npm.taobao.org/<br>  nj ----- https:<span class="hljs-regexp">//</span>registry.nodejitsu.com/<br>  rednpm - http:<span class="hljs-regexp">//</span>registry.mirror.cqupt.edu.cn/<br>  npmMirror  https:<span class="hljs-regexp">//</span>skimdb.npmjs.com<span class="hljs-regexp">/registry/</span><br>  edunpm - http:<span class="hljs-regexp">//</span>registry.enpmjs.org/ <br>  verdaccio --- http:<span class="hljs-regexp">//</span>localhost:<span class="hljs-number">4873</span>/<br><br><span class="hljs-regexp">//</span> nrm 切换 registry 地址<br>nrm use verdaccio<br><br></code></pre></td></tr></table></figure>
+
+<p>② 推荐使用 pm2 对 verdaccio 进行托管</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">//</span> 安装 pm2<br>npm install -g pm2 --unsafe-perm<br><br><span class="hljs-regexp">//</span> 使用 pm2 启动 verdaccio<br>pm2 start verdaccio<br><br><span class="hljs-regexp">//</span> 查看 pm2 守护下的进程 verdaccio 的实时日志<br>pm2 show verdaccio <br><br></code></pre></td></tr></table></figure>
+
+<h2 id="六、发布"><a href="#六、发布" class="headerlink" title="六、发布"></a>六、发布</h2><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">//</span> 注册<br>npm adduser --registry http:<span class="hljs-regexp">//</span>localhost:<span class="hljs-number">4873</span>/<br><br><span class="hljs-regexp">//</span> orr<br>npm adduser<br><span class="hljs-regexp">//</span> 输入用户名、密码、账号 <br><br><span class="hljs-regexp">//</span> <span class="hljs-keyword">if</span> you use HTTPS, add an appropriate CA information (<span class="hljs-string">&quot;null&quot;</span> means get CA list from OS)<br>npm set ca null<br><br></code></pre></td></tr></table></figure>
+
+<p>现有一 npm-test 文件夹需要打包至私有仓库，如何执行？</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">//</span> 在 npm-test 文件夹根目录下执行 npm init, 初始化包填写信息<br>npm init<br><br><span class="hljs-regexp">//</span> 已经切换到我们私服地址的情况下<br>npm publish         <br><br><span class="hljs-regexp">//</span> 未切换到我们的私服时，直接加后缀可以发布到私服上<br>npm publish --registry http:<span class="hljs-regexp">//</span>localhost:<span class="hljs-number">4873</span>/ <br><br><span class="hljs-regexp">//</span> 还可以在 package.json 中加入 publishConfig，就可以直接发布，无需设置仓库<br><span class="hljs-string">&quot;publishConfig&quot;</span>: &#123;<br>    <span class="hljs-string">&quot;registry&quot;</span>: <span class="hljs-string">&quot;http://localhost:4873/&quot;</span><br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<h2 id="七、下载"><a href="#七、下载" class="headerlink" title="七、下载"></a>七、下载</h2><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake">npm <span class="hljs-keyword">install</span> npm-<span class="hljs-keyword">test</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="八、其他设置"><a href="#八、其他设置" class="headerlink" title="八、其他设置"></a>八、其他设置</h2><p>由于官网访问比较慢且表述不容易读懂这里推荐,如权限管理，如何做运维，docker部署等等都有相关说明</p>
+<p><a target="_blank" rel="noopener" href="https://www.axihe.com/npm/verdaccio/home.html">阿西河</a></p>
+<p><a target="_blank" rel="noopener" href="https://verdaccio.org/">Verdaccio官网</a></p>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BD%BF%E7%94%A8/" class="category-chain-item">工具的使用</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%B7%A5%E5%85%B7/">#工具</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Npm包管理工具私有化</div>
+      <div>http://www.stonelst.cn/2021/10/11/Npm包管理工具私有化/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Stone Liu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2021年10月11日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/10/18/vue2%E4%B8%AD%E5%B8%B8%E7%94%A8%E5%B1%9E%E6%80%A7/" title="vue2中常用属性">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">vue2中常用属性</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/10/08/%E6%8A%A5%E9%94%99%E5%90%88%E9%9B%86%E5%8F%8A%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/" title="报错合集及解决办法">
+                        <span class="hidden-mobile">报错合集及解决办法</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+  <div id="SOHUCS" sid='http://www.stonelst.cn/2021/10/11/Npm%E5%8C%85%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7%E7%A7%81%E6%9C%89%E5%8C%96/'></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#SOHUCS', function() {
+      Fluid.utils.createScript("https://changyan.sohu.com/upload/changyan.js", function() {
+        window.changyan.api.config({"appid":"cywuoKn3d","appkey":"eb7dc3d266c55ba286e496c937cd845a"})
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://stonelst.gitee.io/about/" target="_blank" rel="nofollow noopener"><span>Stone</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.0/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

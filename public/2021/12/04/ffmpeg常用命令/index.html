@@ -1,0 +1,800 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Stone Liu">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="ffmpeg下载： 推荐官网下载(http:&#x2F;&#x2F;www.ffmpeg.org&#x2F;download.html), 当然也可以采用国内的镜像源，我这里采用的是windows系统的版本，记得自己配置环境变量  自身信息查看: 12345678910111213141516171819ffmpeg -h             :查看基本帮助信息ffmpeg -h long        :查看高级帮助信息">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ffmpeg常用命令">
+<meta property="og:url" content="http://www.stonelst.cn/2021/12/04/ffmpeg%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/index.html">
+<meta property="og:site_name" content="石头的技术分享">
+<meta property="og:description" content="ffmpeg下载： 推荐官网下载(http:&#x2F;&#x2F;www.ffmpeg.org&#x2F;download.html), 当然也可以采用国内的镜像源，我这里采用的是windows系统的版本，记得自己配置环境变量  自身信息查看: 12345678910111213141516171819ffmpeg -h             :查看基本帮助信息ffmpeg -h long        :查看高级帮助信息">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://thumbnail1.baidupcs.com/thumbnail/5a28e05f8l22ba7094b3a0e502ba2f4e?fid=588163855-250528-1070814146298986&rt=pr&sign=FDTAER-DCb740ccc5511e5e8fedcff06b081203-zQbcJBmEjfrDqxQQEU0kTWfx8V8=&expires=8h&chkbd=0&chkv=0&dp-logid=165598699728324489&dp-callid=0&time=1645876800&size=c1920_u1080&quality=90&vuk=588163855&ft=image&autopolicy=1">
+<meta property="og:image" content="https://z3.ax1x.com/2021/12/01/oGvMz8.png">
+<meta property="og:image" content="https://z3.ax1x.com/2021/12/02/otnJRf.png">
+<meta property="og:image" content="https://z3.ax1x.com/2021/12/02/otMusU.png">
+<meta property="og:image" content="https://z3.ax1x.com/2021/12/02/otQAmD.png">
+<meta property="article:published_time" content="2021-12-04T15:28:35.000Z">
+<meta property="article:modified_time" content="2022-11-20T05:15:37.977Z">
+<meta property="article:author" content="Stone Liu">
+<meta property="article:tag" content="工具">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://thumbnail1.baidupcs.com/thumbnail/5a28e05f8l22ba7094b3a0e502ba2f4e?fid=588163855-250528-1070814146298986&rt=pr&sign=FDTAER-DCb740ccc5511e5e8fedcff06b081203-zQbcJBmEjfrDqxQQEU0kTWfx8V8=&expires=8h&chkbd=0&chkv=0&dp-logid=165598699728324489&dp-callid=0&time=1645876800&size=c1920_u1080&quality=90&vuk=588163855&ft=image&autopolicy=1">
+  
+  
+  
+  <title>ffmpeg常用命令 - 石头的技术分享</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.stonelst.cn","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/64527fcd4247f20fefef2677/1gvh46fq9';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
+<!--End of Tawk.to Script-->
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>石头的博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="ffmpeg常用命令"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2021-12-04 23:28" pubdate>
+          2021年12月4日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          37 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">ffmpeg常用命令</h1>
+            
+            <div class="markdown-body">
+              
+              <p>ffmpeg下载：</p>
+<p>推荐官网下载(<a target="_blank" rel="noopener" href="http://www.ffmpeg.org/download.html">http://www.ffmpeg.org/download.html</a>), 当然也可以采用国内的镜像源，我这里采用的是windows系统的版本，记得自己配置环境变量</p>
+<p><img src="https://thumbnail1.baidupcs.com/thumbnail/5a28e05f8l22ba7094b3a0e502ba2f4e?fid=588163855-250528-1070814146298986&rt=pr&sign=FDTAER-DCb740ccc5511e5e8fedcff06b081203-zQbcJBmEjfrDqxQQEU0kTWfx8V8=&expires=8h&chkbd=0&chkv=0&dp-logid=165598699728324489&dp-callid=0&time=1645876800&size=c1920_u1080&quality=90&vuk=588163855&ft=image&autopolicy=1" srcset="/img/loading.gif" lazyload></p>
+<p>自身信息查看:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs bash">ffmpeg -h             :查看基本帮助信息<br>ffmpeg -h long        :查看高级帮助信息<br>ffmpeg -h full        :查看所有帮助信息<br>ffmpeg -version       :查询版本<br>ffmpeg -buildconf     :查询编译配置<br>ffmpeg -formats       :查询可用格式<br>ffmpeg -muxers        :查询可用复用器<br>ffmpeg -demuxers      :查询可用解复用器<br>ffmpeg -codecs        :查询可用编解码器<br>ffmpeg -decoders      :查询可用解码器<br>ffmpeg -encoders      :查询可用编码器<br>ffmpeg -bsfs          :查询可可用比特流filter<br>ffmpeg -protocols     :查询可用的协议<br>ffmpeg -filters       :查询可用的过滤器<br>ffmpeg -pix_fmts      :查询可用的像素格式<br>ffmpeg -layouts       :查询标准声道名称<br>ffmpeg -sample_fmts   :查询可用的音频采样格式<br>ffmpeg -colors        :查询可用的颜色名称<br><br></code></pre></td></tr></table></figure>
+
+<p>主要参数：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs bash">-i               设置输入文件<br>-f               设置输出格式<br>-y               若输出文件已存在时则覆盖文件<br>-fs              超过指定的文件大小时则结束转换<br>-t               指定输出文件的持续时间，以秒为单位<br>-ss              从指定时间开始转换，以秒为单位<br>-title           设置标题<br>-timestamp       设置时间戳<br>-vsync           增减Frame使影音同步<br>-c               指定输出文件的编码<br>-metadata        更改输出文件的元数据<br>-b:v             设置影像流量，默认为200Kbit/秒。（单位请引用下方注意事项）<br>-r               设置帧率值，默认为25<br>-s               设置画面的宽与高<br>-aspect          设置画面的比例<br>-vn              不处理影像，于仅针对声音做处理时使用<br>-vcodec( -c:v )  设置影像影像编解码器，未设置时则使用与输入文件相同之编解码器<br>-b:a             设置每Channel（最近的SVN版为所有Channel的总合）的流量。（单位请引用下方注意事项）<br>-ar              设置采样率<br>-ac              设置声音的Channel数<br>-acodec ( -c:a ) 设置声音编解码器，未设置时与影像相同，使用与输入文件相同之编解码器<br>-an              不处理声音，于仅针对影像做处理时使用<br>-vol             设置音量大小，256为标准音量。（要设置成两倍音量时则输入512，依此类推。）<br></code></pre></td></tr></table></figure>
+
+<p>视频参数：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash">-b 设定视频流量(码率)，默认为200Kbit/s <br>-r 设定帧速率，默认为25 <br>-s 设定画面的宽与高 <br>-aspect 设定画面的比例 <br>-vn 不处理视频 <br>-vcodec 设定视频编解码器，未设定时则使用与输入流相同的编解码器 <br></code></pre></td></tr></table></figure>
+
+<p>音频参数：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">-ar 设定采样率 <br>-ac 设定声音的Channel数 <br>-acodec 设定声音编解码器，未设定时则使用与输入流相同的编解码器 <br>-an 不处理音频<br></code></pre></td></tr></table></figure>
+
+<h5 id="1-视频格式转换"><a href="#1-视频格式转换" class="headerlink" title="1.视频格式转换"></a>1.视频格式转换</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">ffmpeg -i input.avi output.mp4<br>ffmpeg -i input.mp4 output.ts<br></code></pre></td></tr></table></figure>
+
+<h5 id="2-提取音频"><a href="#2-提取音频" class="headerlink" title="2. 提取音频"></a>2. 提取音频</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">ffmpeg -i test.mp4 -acodec copy -vn output.aac<br>ffmpeg -i test.mp4 -acodec aac -vn output.aac<br>ffmpeg -i test.mp4 -f mp3 -vn test.mp3<br></code></pre></td></tr></table></figure>
+
+<h5 id="3-提取视频"><a href="#3-提取视频" class="headerlink" title="3.提取视频"></a>3.提取视频</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ffmpeg -i input.mp4 -vcodec copy -an output.mp4<br></code></pre></td></tr></table></figure>
+
+<h5 id="4-视频剪切"><a href="#4-视频剪切" class="headerlink" title="4.视频剪切"></a>4.视频剪切</h5><p>00:00:15开始，截取5秒钟的视频</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ffmpeg -ss 00:00:15 -t 00:00:05 -i input.mp4 -vcodec copy -acodec copy output.mp4<br></code></pre></td></tr></table></figure>
+
+<h5 id="5-码率控制"><a href="#5-码率控制" class="headerlink" title="5.码率控制"></a>5.码率控制</h5><p>码率控制对于在线视频比较重要。因为在线视频需要考虑其能提供的带宽。</p>
+<p>那么，什么是码率？很简单：<br>bitrate = file size / duration<br>比如一个文件20.8M，时长1分钟，那么，码率就是：<br>biterate = 20.8M bit/60s = 20.810241024*8 bit/60s= 2831Kbps<br>一般音频的码率只有固定几种，比如是128Kbps，<br>那么，video的就是<br>video biterate = 2831Kbps -128Kbps = 2703Kbps。</p>
+<p>说完背景了。好了，来说ffmpeg如何控制码率。<br>ffmpg控制码率有3种选择，-minrate -b:v -maxrate<br>-b:v主要是控制平均码率。<br>比如一个视频源的码率太高了，有10Mbps，文件太大，想把文件弄小一点，但是又不破坏分辨率。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ffmpeg -i input.mp4 -b:v 2000k output.mp4<br></code></pre></td></tr></table></figure>
+
+<p>上面把码率从原码率转成2Mbps码率，这样其实也间接让文件变小了。目测接近一半。<br>不过，ffmpeg官方wiki比较建议，设置b:v时，同时加上 -bufsize<br>-bufsize 用于设置码率控制缓冲器的大小，设置的好处是，让整体的码率更趋近于希望的值，减少波动。（简单来说，比如1 2的平均值是1.5， 1.49 1.51 也是1.5, 当然是第二种比较好）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ffmpeg -i input.mp4 -b:v 2000k -bufsize 2000k output.mp4<br></code></pre></td></tr></table></figure>
+
+<p>-minrate -maxrate就简单了，在线视频有时候，希望码率波动，不要超过一个阈值，可以设置maxrate。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ffmpeg -i input.mp4 -b:v 2000k -bufsize 2000k -maxrate 2500k output.mp4<br></code></pre></td></tr></table></figure>
+
+<h5 id="6-视频编码格式转换"><a href="#6-视频编码格式转换" class="headerlink" title="6.视频编码格式转换"></a>6.视频编码格式转换</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">ffmpeg -i input.mp4 -vcodec h264 output.mp4<br>ffmpeg -i input.mp4 -vcodec mpeg4 output.mp4<br>ffmpeg -i input.mp4 -c:v libx265 output.mp4<br>ffmpeg -i input.mp4 -c:v libx264 output.mp4<br></code></pre></td></tr></table></figure>
+
+<h5 id="7-只提取视频ES数据"><a href="#7-只提取视频ES数据" class="headerlink" title="7. 只提取视频ES数据"></a>7. 只提取视频ES数据</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ffmpeg –i input.mp4 –vcodec copy –an –f m4v output.h264<br></code></pre></td></tr></table></figure>
+
+<h5 id="8-过滤器的使用"><a href="#8-过滤器的使用" class="headerlink" title="8. 过滤器的使用"></a>8. 过滤器的使用</h5><h6 id="8-1-将输入的1920x1080缩小到960x540输出"><a href="#8-1-将输入的1920x1080缩小到960x540输出" class="headerlink" title="8.1.将输入的1920x1080缩小到960x540输出:"></a>8.1.将输入的1920x1080缩小到960x540输出:</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ffmpeg -i input.mp4 -vf scale=960:540 output.mp4<br></code></pre></td></tr></table></figure>
+
+<h6 id="8-2-为视频添加logo"><a href="#8-2-为视频添加logo" class="headerlink" title="8.2 为视频添加logo"></a>8.2 为视频添加logo</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ffmpeg -i input.mp4 -i iQIYI_logo.png -filter_complex overlay output.mp4<br></code></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/oGvMz8"><img src="https://z3.ax1x.com/2021/12/01/oGvMz8.png" srcset="/img/loading.gif" lazyload alt="oGvMz8.png"></a></p>
+<p>右上角：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ffmpeg -i input.mp4 -i logo.png -filter_complex overlay=W-w output.mp4<br></code></pre></td></tr></table></figure>
+
+<p>左下角：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ffmpeg -i input.mp4 -i logo.png -filter_complex overlay=0:H-h output.mp4<br></code></pre></td></tr></table></figure>
+
+<p>右下角：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ffmpeg -i input.mp4 -i logo.png -filter_complex overlay=W-w:H-h output.mp4<br></code></pre></td></tr></table></figure>
+
+<h6 id="8-3-去掉视频的logo"><a href="#8-3-去掉视频的logo" class="headerlink" title="8.3 去掉视频的logo"></a>8.3 去掉视频的logo</h6><p>有时候，下载了某个网站的视频，但是有logo很烦，咋办？有办法，用ffmpeg的delogo过滤器。<br>语法：-vf delogo=x:y:w:h[:t[:show]]<br>x:y 离左上角的坐标<br>w:h logo的宽和高<br>t: 矩形边缘的厚度默认值4<br>show：若设置为1有一个绿色的矩形，默认值0。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ffmpeg -i input.mp4 -vf delogo=0:0:220:90:100:1 output.mp4<br></code></pre></td></tr></table></figure>
+
+<p>结果如下所示：</p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/otnJRf"><img src="https://z3.ax1x.com/2021/12/02/otnJRf.png" srcset="/img/loading.gif" lazyload alt="otnJRf.png"></a></p>
+<h5 id="9-抓取视频的一些帧，存为jpeg图片"><a href="#9-抓取视频的一些帧，存为jpeg图片" class="headerlink" title="9. 抓取视频的一些帧，存为jpeg图片"></a>9. 抓取视频的一些帧，存为jpeg图片</h5><p>比如，一个视频，我想提取一些帧，存为图片，咋办？</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ffmpeg -i input.mp4 -r 1 -q:v 2 -f image2 pic-%03d.jpeg<br></code></pre></td></tr></table></figure>
+
+<p>-r 表示每一秒几帧<br>-q:v表示存储jpeg的图像质量，一般2是高质量。<br>如此，ffmpeg会把input.mp4，每隔一秒，存一张图片下来。假设有60s，那会有60张。</p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/otMusU"><img src="https://z3.ax1x.com/2021/12/02/otMusU.png" srcset="/img/loading.gif" lazyload alt="otMusU.png"></a></p>
+<p>60张？什么？这么多？不要不要。。。。。不要咋办？？<br>可以设置开始的时间，和你想要截取的时间呀。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ffmpeg -i input.mp4 -ss 00:00:20 -t 10 -r 1 -q:v 2 -f image2 pic-%03d.jpeg<br></code></pre></td></tr></table></figure>
+
+<p>-ss 表示开始时间<br>-t表示共要多少时间。<br>如此，ffmpeg会从input.mp4的第20s时间开始，往下10s，即20~30s这10秒钟之间，每隔1s就抓一帧，总共会抓10帧。<br><a target="_blank" rel="noopener" href="https://imgtu.com/i/otQAmD"><img src="https://z3.ax1x.com/2021/12/02/otQAmD.png" srcset="/img/loading.gif" lazyload alt="otQAmD.png"></a></p>
+<h5 id="10-将带透明的png图片转为带透明的webM视频"><a href="#10-将带透明的png图片转为带透明的webM视频" class="headerlink" title="10. 将带透明的png图片转为带透明的webM视频"></a>10. 将带透明的png图片转为带透明的webM视频</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ffmpeg -f image2 -i cap_%d.png -c:v libvpx -auto-alt-ref 0 -r 10000 ./out_vp8.webm<br></code></pre></td></tr></table></figure>
+
+<h5 id="11-视频与音频合并"><a href="#11-视频与音频合并" class="headerlink" title="11. 视频与音频合并"></a>11. 视频与音频合并</h5><h6 id="11-1-视频本身有声音的情况"><a href="#11-1-视频本身有声音的情况" class="headerlink" title="11.1 视频本身有声音的情况"></a>11.1 视频本身有声音的情况</h6><p>命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ffmpeg -i input_video.mp4 -i input_audio.mp3 -c:v copy -c:a aac -map 0:v:0 -map 1:a:0 output.mp4<br></code></pre></td></tr></table></figure>
+
+<p>最后时长是音频或视频的时长的最大值。</p>
+<p>-map的意思是，使用第一个输入源的视频，第二个输入源的音频</p>
+<h6 id="11-2-视频本身没声音的情况"><a href="#11-2-视频本身没声音的情况" class="headerlink" title="11.2 视频本身没声音的情况"></a>11.2 视频本身没声音的情况</h6><p>命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ffmpeg -i video.mp4 -i audio.mp3 -c:v copy -c:a aac output.mp4<br></code></pre></td></tr></table></figure>
+
+<p>如果合并希望视频或音频哪个先结束，就完成合并，则加一个参数-shortest</p>
+<h6 id="11-3-剪切视频的部分区域"><a href="#11-3-剪切视频的部分区域" class="headerlink" title="11.3 剪切视频的部分区域"></a>11.3 剪切视频的部分区域</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ffmpeg -i in.mp4 -filter:v <span class="hljs-string">&quot;crop=out_w:out_h:x:y&quot;</span> out.mp4<br></code></pre></td></tr></table></figure>
+
+<p>out_w 视频截取的宽<br>out_h 视频截取的高<br>x and y 截取的左上角坐标</p>
+<p>例如，把一个1080p的横屏视频，截取为一个宽高为576x1024的竖屏视频</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ffmpeg -i input.mp4 -filter:v <span class="hljs-string">&quot;crop=576:1024:0:0&quot;</span> cut_out.mp4<br></code></pre></td></tr></table></figure>
+
+<h6 id="11-4-合并2个视频"><a href="#11-4-合并2个视频" class="headerlink" title="11.4 合并2个视频"></a>11.4 合并2个视频</h6><p>最好2个视频是同样格式以及大小。<br>用如下3个命令，先把2个输入文件转为临时文件，保证格式一样，然后合并<br>合并2个视频：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">ffmpeg -i input1.mp4 -c copy -bsf:v h264_mp4toannexb -f mpegts intermediate1.ts<br>ffmpeg -i input2.mp4 -c copy -bsf:v h264_mp4toannexb -f mpegts intermediate2.ts<br>ffmpeg -i <span class="hljs-string">&quot;concat:intermediate1.ts|intermediate2.ts&quot;</span> -c copy -bsf:a aac_adtstoasc output.mp4<br></code></pre></td></tr></table></figure>
+
+<p>–未完待续–</p>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E8%A7%86%E9%A2%91%E5%A4%84%E7%90%86/" class="category-chain-item">视频处理</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%B7%A5%E5%85%B7/">#工具</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>ffmpeg常用命令</div>
+      <div>http://www.stonelst.cn/2021/12/04/ffmpeg常用命令/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Stone Liu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2021年12月4日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/06/01/%E5%89%8D%E7%AB%AF%E7%9B%91%E6%8E%A7/" title="前端监控">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">前端监控</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/10/28/vue%E4%B8%AD%E5%BC%95%E5%85%A5%E5%A4%96%E9%83%A8js%E6%96%87%E4%BB%B6/" title="vue中引入外部js文件">
+                        <span class="hidden-mobile">vue中引入外部js文件</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+  <div id="SOHUCS" sid='http://www.stonelst.cn/2021/12/04/ffmpeg%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/'></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#SOHUCS', function() {
+      Fluid.utils.createScript("https://changyan.sohu.com/upload/changyan.js", function() {
+        window.changyan.api.config({"appid":"cywuoKn3d","appkey":"eb7dc3d266c55ba286e496c937cd845a"})
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://stonelst.gitee.io/about/" target="_blank" rel="nofollow noopener"><span>Stone</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.0/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
